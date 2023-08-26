@@ -1,0 +1,79 @@
+# import urllib library
+from urllib.request import urlopen
+
+# import json
+import json
+
+from datetime import datetime, timedelta
+
+from dateutil.relativedelta import relativedelta
+
+date1 = date.today()
+date_1= str(date1)
+x = (date_1).split("-")
+print (x)
+
+
+
+    #to generate end date
+
+def add_months(date, months_to_add):
+    new_date = date + relativedelta(months=months_to_add)
+    return new_date
+
+# Example usage
+given_date = datetime(2023, 8, 26)
+months_to_add = 3
+
+new_date = add_months(given_date, months_to_add)
+print("Given Date:", given_date.strftime('%Y-%m-%d'))
+print("New Date:", new_date.strftime('%Y-%m-%d'))
+
+    #to append date into file
+
+with open("seperateddata.txt","a") as datefile:
+    
+    #to generate date 
+    def generate_dates_between(start_date, end_date):
+        dates_list = []
+        current_date = start_date
+
+        while current_date <= end_date:
+            dates_list.append(current_date.strftime('%Y-%m-%d'))
+            current_date += timedelta(days=1)
+
+        return dates_list
+
+    # Example usage
+    
+
+    dates_between = generate_dates_between(date1, end_date)
+    for date in dates_between:
+        print(date)
+       
+
+print(list1)
+print(len(list1))
+
+
+
+def weather_data(location1): #function for getting the value to feed the into model
+    url = f"https://api.weatherapi.com/v1/future.json?key=454c7472a911474985b144042232408&q={location1}&dt=2023-09-26"
+
+
+
+    response = urlopen(url)
+
+    data_json = json.loads(response.read())
+
+    with open("data.csv", "w") as file:
+        file.write(str(data_json["forecast"]["forecastday"][0]["day"]["maxtemp_c"]))
+        file.write(str(data_json["forecast"]["forecastday"]["hour"][7]["hour_index"]["will_it_rain"]))
+
+
+
+    print(json.dumps(data_json))
+
+
+location = input("enter the location")
+weather_data(location)
